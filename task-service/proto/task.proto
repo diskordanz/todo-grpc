@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package  go.micro.srv.task; 
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message Task{
+  uint64 id = 1;
+  string name = 2;
+  string description = 3;
+  uint64 user_id = 4;
+  google.protobuf.Timestamp date = 5;
+}
+service TaskService {
+  rpc CreateTask(CreateTaskRequest) returns (TaskResponse){}
+  rpc UpdateTask(UpdateTaskRequest) returns (TaskResponse){}
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty){}
+  rpc GetTask(GetTaskRequest) returns (TaskResponse){}
+  rpc ListTasks (ListTasksRequest) returns (ListTasksResponse){}
+  
+}
+
+message CreateTaskRequest{
+  Task task = 1;
+}
+
+message UpdateTaskRequest{
+  Task task = 1;
+}
+
+message GetTaskRequest{
+  uint64 id = 1;
+}
+
+message DeleteTaskRequest{
+  uint64 id = 1;
+}
+
+message ListTasksRequest{
+  string filter = 1;
+}
+
+message ListTasksResponse{
+  repeated Task Tasks = 1;
+}
+
+message TaskResponse{
+  Task task = 1;
+}
